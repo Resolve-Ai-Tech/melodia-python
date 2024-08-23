@@ -1,0 +1,29 @@
+# Arquivos de ambientes virtuais
+venv/
+.env/
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Arquivos gerados pelo sistema operacional
+.DS_Store
+Thumbs.db
+ehthumbs.db
+*.swp
+*.swo
+*~
+
+# Arquivos de configuração do ambiente
+.env
+.env.*
+
+# Arquivos de cobertura de testes
+coverage/
+*.lcov
+
+# Diretório de build
+build/
+dist/
+*.egg-info/
