@@ -1,8 +1,7 @@
 from flask import request, jsonify
 
-def validar_parametros(parametros_necessarios: dict):
+def validacao_de_parametros(parametros_necessarios: dict):
     # Verifica todos os parametros necessarios
-
     for parametro in parametros_necessarios.keys():
         # Verifica http_method` utilizar
         if request.method == "GET":
