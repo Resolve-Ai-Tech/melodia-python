@@ -1,0 +1,71 @@
+CREATE DATABASE melodia;
+\c melodia;
+
+CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    senha VARCHAR(255) NOT NULL,
+    nome VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE musicas (
+    id SERIAL PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    artista VARCHAR(255) NOT NULL,
+    album VARCHAR(255),
+    genero VARCHAR(50),
+    duracao INT NOT NULL,
+    capaUrl VARCHAR(255)
+);
+
+CREATE TABLE playlists (
+    id SERIAL PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    usuario_id INT REFERENCES usuarios(id) ON DELETE CASCADE
+);
+
+CREATE TABLE playlist_musicas (
+    playlist_id INT REFERENCES playlists(id) ON DELETE CASCADE,
+    musica_id INT REFERENCES musicas(id) ON DELETE CASCADE,
+    PRIMARY KEY (playlist_id, musica_id)
+);
+
+CREATE TABLE avaliacoes_musicas (
+    id SERIAL PRIMARY KEY,
+    musica_id INT REFERENCES musicas(id) ON DELETE CASCADE,
+    usuario_id INT REFERENCES usuarios(id) ON DELETE CASCADE,
+    avaliacao TEXT NOT NULL,
+    sentimento VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE atividades_usuarios (
+    id SERIAL PRIMARY KEY,
+    usuario_id INT REFERENCES usuarios(id) ON DELETE CASCADE,
+    atividade VARCHAR(50) NOT NULL,
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE historico_uso (
+    id SERIAL PRIMARY KEY,
+    usuario_id INT REFERENCES usuarios(id) ON DELETE CASCADE,
+    musica_id INT REFERENCES musicas(id) ON DELETE CASCADE,
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    acao VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE tendencias_musicais (
+    id SERIAL PRIMARY KEY,
+    musica_id INT REFERENCES musicas(id) ON DELETE CASCADE,
+    contagem_reproducoes INT NOT NULL,
+    periodo VARCHAR(50) NOT NULL,
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE preferencias_usuarios (
+    id SERIAL PRIMARY KEY,
+    usuario_id INT REFERENCES usuarios(id) ON DELETE CASCADE,
+    preferencia VARCHAR(50) NOT NULL,
+    genero_preferido VARCHAR(50),
+    data_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
