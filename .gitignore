@@ -28,3 +28,6 @@ coverage/
 build/
 dist/
 *.egg-info/
+
+# Docker data
+docker/data/
