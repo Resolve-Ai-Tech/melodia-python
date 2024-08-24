@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, jsonify
 from src.utils import parametrers_validation
 import psycopg2
 
@@ -6,22 +6,22 @@ app = Flask(__name__)
 
 # Rota de inicio
 @app.route('/', methods=['GET'])
-def home_index():
+def incio():
     return jsonify({'status': 'API Funcionando!'})
 
 
 @app.route('/playlists', methods=['POST'])
 def playlists():
     # Verifica todos os parametros necessarios
-    required_parametrers = {"playlist_name": None}
-    validation = parametrers_validation(required_parametrers)
-    if validation:
-        return validation
+    parametros_necessarios = {"playlist_name": None}
+    validacao = parametrers_validation(parametros_necessarios)
+    if validacao:
+        return validacao
 
     # Lógica de playlists geradas com base na atividade
     # Lógica de playlists geradas em preferencias
     # Lógica de playlists geradas por região
-    return jsonify({'status': f'Playlist {required_parametrers["playlist_name"]} foi criada com sucesso!'})
+    return jsonify({'status': f'Playlist {parametros_necessarios["playlist_name"]} foi criada com sucesso!'})
 
 
 @app.route('/trends', methods=['GET'])
@@ -31,7 +31,7 @@ def musicas_trends():
 
 
 @app.route('/musicas', methods=['GET'])
-def musicas_por_pessoa()
+def musicas_por_pessoa():
     # Lógica de musicas baseadas em emoções
     pass
 

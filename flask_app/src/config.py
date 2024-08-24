@@ -11,4 +11,4 @@ DATABASE_CONFIG = {
 
 # Obter conexão com o banco de dados
 def database_connection():
-    return psycopg2.connect(**DATABASE_CONFIG)
+    return connect(**DATABASE_CONFIG)

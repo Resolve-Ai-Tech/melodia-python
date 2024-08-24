@@ -1,19 +1,19 @@
 from flask import request, jsonify
 
-def parametrers_validation(required_parametrers: dict):
+def validar_parametros(parametros_necessarios: dict):
     # Verifica todos os parametros necessarios
 
-    for parametrer in required_parametrers.keys():
+    for parametro in parametros_necessarios.keys():
         # Verifica http_method` utilizar
         if request.method == "GET":
-            parametrer_get = request.args.get(parametrer)
+            pegar_parametro = request.args.get(parametro)
         elif request.method == "POST":
-            parametrer_get = request.form.get(parametrer)
+            pegar_parametro = request.form.get(parametro)
 
         # Emissão de erro caso algum parâmetro necessario esteja vazio
-        if not parametrer_get:
-            return jsonify({'status': f'Failed {parametrer} parametrer not found'})
+        if not pegar_parametro:
+            return jsonify({'status': f'Failed {parametro} parametrer not found'})
         else:
-            required_parametrers[parametrer] = parametrer_get
+            parametros_necessarios[parametro] = pegar_parametro
 
 
