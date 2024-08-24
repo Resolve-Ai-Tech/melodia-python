@@ -10,7 +10,6 @@ def parametrers_validation(required_parametrers: dict):
         elif request.method == "POST":
             parametrer_get = request.form.get(parametrer)
 
-        print(parametrer_get)
         # Emissão de erro caso algum parâmetro necessario esteja vazio
         if not parametrer_get:
             return jsonify({'status': f'Failed {parametrer} parametrer not found'})
