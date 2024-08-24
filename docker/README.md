@@ -25,7 +25,16 @@ Pronto! Seu container PostgreSQL foi criado com sucesso.
 ```bash
 docker start melodia_sql
 ```
+**Para atualizar a database, utilize os comandos abaixo:**
+```bash
+docker cp db/ melodia_sql:db/
+docker exec -it melodia_sql psql -U melodia -f db/melodia_database.db
+docker exec -it melodia_sql psql -U melodia -d melodia -f db/melodia_values.db
+```
+
 **Para se conectar diretamente ao PostgreSQL, utilize o comando abaixo:**
 ```bash
 docker exec -it melodia_sql psql -U melodia -d melodia
 ```
+
+Pronto! agora você tem um conteiner PostgreSQL com uma variedade de dados em seu computador, lembre-se de ligar-lo sempre que quiser utilizar o banco de dados.
