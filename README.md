@@ -49,15 +49,17 @@ git push origin <numero_da_tarefa>
   - No campo de descrição, informe detalhadamente as alterações realizadas e faça referência ao número da tarefa.
   - Clique em `Create pull request` novamente para confirmar.
 
-## 5. Revisão de Código
-- O líder da equipe será responsável por revisar o código no PR.
-- Caso haja necessidade de ajustes, o líder deixará comentários no PR para que as correções sejam feitas.
-- Após as correções, faça novos commits na mesma branch e atualize o PR.
-
-## 6. Atualizar a Branch `main` para Iniciar uma Nova Tarefa
-- Volte para a branch `main` e repita o processo para a próxima tarefa:
+## 5. Atualizar a Branch `main` para Iniciar uma Nova Tarefa
+- Após criar o PR, volte para a branch `main`, atualize ela para garantir que você tenha a versão mais recente.para iniciar a próxima tarefa:
 ```sql
 git checkout main
 git pull
 ```
-- Repita o processo para a próxima tarefa, criando uma nova branch a partir da main.
+- Repita todo o processo novamente (criar branch, desenvolver, etc.) para a próxima tarefa.
+
+## 6. Revisão de Código
+- O líder da equipe será responsável por revisar o código no PR que será enviado para a branch `develop`.
+- Caso haja necessidade de ajustes, o líder deixará comentários no PR para que as correções sejam feitas.
+- Após as correções, faça novos commits na mesma branch e atualize o PR.
+- Após a aprovação do PR e a realização do merge na branch `develop`, o líder da equipe deverá criar um novo PR para atualizar a branch `main` através da branch `develop`.
+- Esse processo garante que todas as alterações aprovadas e testadas sejam integradas na branch `main`, mantendo a integridade e a estabilidade do código principal.
