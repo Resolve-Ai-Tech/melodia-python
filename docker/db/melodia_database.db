@@ -1,6 +1,11 @@
 CREATE DATABASE melodia;
 \c melodia;
 
+CREATE TABLE atividades (
+    id SERIAL PRIMARY KEY,
+    atividade VARCHAR(50) NOT NULL
+);
+
 CREATE TABLE usuarios (
     id SERIAL PRIMARY KEY,
     email VARCHAR(255) UNIQUE NOT NULL,

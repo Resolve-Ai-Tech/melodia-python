@@ -1,3 +1,18 @@
+INSERT INTO atividades (atividade) VALUES
+('estudar'),
+('relaxamento'),
+('treino'),
+('cozinhar'),
+('viajar'),
+('limpeza'),
+('caminhada'),
+('jogar'),
+('dançar'),
+('família'),
+('compras'),
+('desenhar'),
+('dormir');
+
 INSERT INTO usuarios (email, senha, nome) VALUES
 ('alice.smith@example.com', 'hashed_password1', 'Alice Smith'),
 ('bob.jones@example.com', 'hashed_password2', 'Bob Jones'),
@@ -109,7 +124,7 @@ INSERT INTO avaliacoes_musicas (musica_id, usuario_id, avaliacao, sentimento) VA
 (12, 6, 'Amazing vibe, perfect for chilling.', 'Positivo');
 
 INSERT INTO atividades_usuarios (usuario_id, atividade) VALUES
-(1, 'estudo'),
+(1, 'estudar'),
 (2, 'relaxamento'),
 (3, 'treino'),
 (4, 'cozinhar'),
@@ -118,10 +133,10 @@ INSERT INTO atividades_usuarios (usuario_id, atividade) VALUES
 (7, 'limpar a casa'),
 (8, 'meditar'),
 (9, 'caminhada'),
-(10, 'jogar videogame'),
+(10, 'jogar'),
 (11, 'dirigir'),
-(12, 'ler'),
-(13, 'yoga'),
+(12, 'estudar'),  -- Alterado de 'ler' para 'estudar'
+(13, 'meditar'),  -- Mantido 'meditar'
 (14, 'exercício físico'),
 (15, 'dançar'),
 (16, 'festa'),
