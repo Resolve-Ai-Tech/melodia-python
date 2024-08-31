@@ -1,63 +1,48 @@
 from flask import Flask, request, jsonify
-import src.utils as utils
-import src.config as api
+from src import api, utils
 
 app = Flask(__name__)
 
-# Rota de inicio
 @app.route('/', methods=['GET'])
-def incio():
-    return jsonify({'status': 'API Funcionando!'})
+def inicio():
+    """Retorna uma mensagem indicando que a API está funcionando."""
+    return jsonify({'status': 'API Funcionando!'}), 200
 
-@app.route('/playlists', methods=['POST'])
-def playlists_post():
-    """"Cria uma playlist baseado em um usuario ou outra filtragem"""
-    
-    # Verificação de todos os parametros necessarios
-    parametros_necessarios = {"nome_da_playlist": None, "id_do_usuario": None, "filtro_de_playlist": None}
+@app.route('/playlists', methods=['GET'])
+def playlists_get():
+    parametros_necessarios = {'filtro': None, 'usuarioID': None}
     validacao = utils.validacao_de_parametros(parametros_necessarios)
     if validacao:
+        print('oush')
         return validacao
-
-    musicas_recomendadas = {
-        'estudar': ['Lo-fi', 'Jazz', 'Clássica', 'Piano Relaxante'],
-        'relaxamento': ['Ambient', 'Chillout', 'Música New Age', 'Acústica'],
-        'treino': ['Hip-Hop', 'Trap', 'Rock Alternativo', 'EDM'],
-        'cozinhar': ['Bossa Nova', 'Soul', 'Jazz', 'Pop Leve'],
-        'viajar': ['Indie Folk', 'Synthwave', 'Pop Rock', 'World Music'],
-        'limpeza': ['Pop Energético', 'Funk', 'Dance', 'Disco'],
-        'caminhada': ['Indie Pop', 'Reggae', 'Folk', 'Música Eletrônica Leve'],
-        'jogar': ['Synthwave', 'Drum & Bass', 'Rock Progressivo', '8-bit'],
-        'dançar': ['Funk', 'Reggaeton', 'House Music', 'Pop'],
-        'família': ['MPB', 'Country', 'Folk', 'Pop Clássico'],
-        'compras': ['Electropop', 'Disco', 'R&B Contemporâneo', 'Synthpop'],
-        'desenhar': ['Jazz Contemporâneo', 'Indie Instrumental', 'Lo-fi', 'Clássica'],
-        'dormir': ['Música Ambiente', 'Som de Chuva', 'Piano Suave', 'Clássica Relaxante']
-    }
-    match parametros_necessarios['filtro_de_playlist']:
-        case "preferencia":
-            # Lógica de playlists geradas com base na atividade
-            preferencia = api.preferencias_de_usuarios(parametros_necessarios['id_do_usuario'])
-            return jsonify({"status": "200" ,"musicas": api.musicas(musicas_recomendadas[preferencia])})
-        case "atividade":
-            # Lógica de playlists geradas em preferencias
-            return jsonify({"status": "200" ,"musicas": []})
-
-        case "regiao":
-            # Lógica de playlists geradas por região
-            return jsonify({"status": "200" ,"musicas": []})
     
+    filtro = parametros_necessarios['filtro']
+    usuario_id = parametros_necessarios['usuarioID']
+    
+    #usuario = api.obter_usuario_por_id(usuario_id=usuario_id)
+    
+    if filtro == 'preferencia':
+        musicas = api.obter_musicas_por_preferencia(preferencia=["Rock", "Jazz"]) #usuario["preferencia"])
+    elif filtro == 'atividade':
+        musicas = api.obter_musicas_por_atividade(atividade=usuario["atividade"])
+    elif filtro == 'regiao':
+        musicas = api.obter_musicas_por_regiao(região=usuario["localização"])
+    else:
+        return jsonify({'error': 'Filtro de playlist inválido'}), 400
+
+    return jsonify({"status": "200", "musicas": musicas}), 200
+
 @app.route('/trends', methods=['GET'])
 def musicas_trends():
-    # Lógica de tendencias musicais
+    """Retorna as tendências musicais atuais."""
     response = {}
-    return jsonify(response)
+    return jsonify(response), 200
 
 @app.route('/musicas', methods=['GET'])
 def musicas_por_pessoa():
-    # Lógica de musicas baseadas em emoções
+    """Retorna músicas recomendadas com base nas emoções do usuário."""
     response = {}
-    return jsonify(response)
+    return jsonify(response), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
