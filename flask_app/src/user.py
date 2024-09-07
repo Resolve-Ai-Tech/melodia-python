@@ -1,5 +1,5 @@
 from requests import get as get_api
-from utils import API_URL
+from src.utils import API_URL
 
 class Usuario:
     def __init__(self, usuario_id: int):        

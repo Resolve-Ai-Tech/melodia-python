@@ -1,7 +1,7 @@
 from random import shuffle
 from typing import List
 from requests import get as get_api
-from utils import atividades_recomendadas, API_URL
+from src.utils import atividades_recomendadas, API_URL
 
 
 def obter_musicas(generos: List[str]) -> List[int]:

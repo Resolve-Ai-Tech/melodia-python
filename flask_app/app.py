@@ -1,7 +1,6 @@
 from flask import Flask, jsonify
-from src.user import Usuario
 from src.utils import validacao_de_parametros
-from src import playlists
+from src import playlists, user
 
 # App #
 app = Flask(__name__)
@@ -18,7 +17,7 @@ def playlists_get():
         return validacao
     
     filtro = parametros_necessarios['filtro']
-    usuario = Usuario(parametros_necessarios['usuarioid'])
+    usuario = user.Usuario(parametros_necessarios['usuarioid'])
 
     if filtro == 'preferencia':
         musicas = playlists.obter_musicas_por_preferencia(usuario.preferencias_musicais)
