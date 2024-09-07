@@ -1,4 +1,4 @@
-from requests import get_api
+from requests import get as get_api
 from utils import API_URL
 
 class Usuario:
