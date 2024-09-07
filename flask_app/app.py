@@ -1,48 +1,43 @@
-from flask import Flask, request, jsonify
-from src import api, utils
+from flask import Flask, jsonify
+from src.user import Usuario
+from src.utils import validacao_de_parametros
+from src import playlists
 
+# App #
 app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def inicio():
-    """Retorna uma mensagem indicando que a API está funcionando."""
     return jsonify({'status': 'API Funcionando!'}), 200
 
 @app.route('/playlists', methods=['GET'])
 def playlists_get():
-    parametros_necessarios = {'filtro': None, 'usuarioID': None}
-    validacao = utils.validacao_de_parametros(parametros_necessarios)
+    parametros_necessarios = {'filtro': None, 'usuarioid': None}
+    validacao = validacao_de_parametros(parametros_necessarios)
     if validacao:
-        print('oush')
         return validacao
     
     filtro = parametros_necessarios['filtro']
-    usuario_id = parametros_necessarios['usuarioID']
-    
-    #usuario = api.obter_usuario_por_id(usuario_id=usuario_id)
-    
-    if filtro == 'preferencia':
-        musicas = api.obter_musicas_por_preferencia(preferencia=["Rock", "Jazz"]) #usuario["preferencia"])
-    elif filtro == 'atividade':
-        musicas = api.obter_musicas_por_atividade(atividade=usuario["atividade"])
-    elif filtro == 'regiao':
-        musicas = api.obter_musicas_por_regiao(região=usuario["localização"])
-    else:
-        return jsonify({'error': 'Filtro de playlist inválido'}), 400
+    usuario = Usuario(parametros_necessarios['usuarioid'])
 
-    return jsonify({"status": "200", "musicas": musicas}), 200
+    if filtro == 'preferencia':
+        musicas = playlists.obter_musicas_por_preferencia(usuario.preferencias_musicais)
+    elif filtro == 'atividade':
+        musicas = playlists.obter_musicas_por_atividade(usuario.estado_emocional)
+    elif filtro == 'regiao':
+        musicas = playlists.obter_musicas_por_regiao(usuario.localizacao)
+    else:
+        return jsonify({'error': f'Filtro de playlist inválido: {filtro}'}), 400
+
+    return jsonify({"musicas": musicas}), 200
 
 @app.route('/trends', methods=['GET'])
 def musicas_trends():
-    """Retorna as tendências musicais atuais."""
-    response = {}
-    return jsonify(response), 200
+    return jsonify({}), 200
 
 @app.route('/musicas', methods=['GET'])
 def musicas_por_pessoa():
-    """Retorna músicas recomendadas com base nas emoções do usuário."""
-    response = {}
-    return jsonify(response), 200
+    return jsonify({}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
