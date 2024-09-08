@@ -21,7 +21,6 @@ def obter_musicas(generos: List[str]) -> List[int]:
 def obter_musicas_por_atividade(atividade: str) -> List[int]:
     """Obter músicas recomendadas com base na atividade do usuário"""
     generos = atividades_recomendadas['emocoes'].get(atividade, [])
-    print(generos)
     if not generos:
         return f"Emoção {atividade} não tem gêneros recomendados"
     return obter_musicas(generos)[:50]
@@ -35,7 +34,6 @@ def obter_musicas_por_preferencia(preferencias: List[str]) -> List[int]:
 def obter_musicas_por_regiao(regiao: any) -> List[int]:
     """Obter músicas com base em todas as preferências musicais do usuário"""
     recomendacao = atividades_recomendadas['regiao'].get(regiao, [])
-    print(recomendacao, regiao)
     if not recomendacao:
         return "Nenhuma região encontrada."
     return obter_musicas(recomendacao)[:50]
