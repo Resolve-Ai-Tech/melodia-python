@@ -9,26 +9,38 @@ app = Flask(__name__)
 def inicio():
     return jsonify({'status': 'API Funcionando!'}), 200
 
-@app.route('/playlists', methods=['GET'])
-def playlists_get():
-    parametros_necessarios = {'filtro': None, 'usuarioid': None}
+@app.route('/playlists/preferencia', methods=['GET'])
+def playlists_preferencia():
+    parametros_necessarios = {'dados': None}
     validacao = validacao_de_parametros(parametros_necessarios)
     if validacao:
         return validacao
-    
-    filtro = parametros_necessarios['filtro']
-    usuario = user.Usuario(parametros_necessarios['usuarioid'])
 
-    if filtro == 'preferencia':
-        musicas = playlists.obter_musicas_por_preferencia(usuario.preferencias_musicais)
-    elif filtro == 'atividade':
-        musicas = playlists.obter_musicas_por_atividade(usuario.estado_emocional)
-    elif filtro == 'regiao':
-        musicas = playlists.obter_musicas_por_regiao(usuario.localizacao)
-    else:
-        return jsonify({'error': f'Filtro de playlist inválido: {filtro}'}), 400
+    preferencias_musicais = parametros_necessarios['dados']
+    musicas = playlists.obter_musicas_por_preferencia(preferencias_musicais)
+    return jsonify(musicas), 200
 
-    return jsonify({"musicas": musicas}), 200
+@app.route('/playlists/atividade', methods=['GET'])
+def playlists_atividade():
+    parametros_necessarios = {'dados': None}
+    validacao = validacao_de_parametros(parametros_necessarios)
+    if validacao:
+        return validacao
+
+    estado_emocional = parametros_necessarios['dados']  # Ajuste conforme a estrutura de dados
+    musicas = playlists.obter_musicas_por_atividade(estado_emocional)
+    return jsonify(musicas), 200
+
+@app.route('/playlists/regiao', methods=['GET'])
+def playlists_regiao():
+    parametros_necessarios = {'latitude': None, 'longitude': None}
+    validacao = validacao_de_parametros(parametros_necessarios)
+    if validacao:
+        return validacao
+
+    localizacao = playlists.determinar_regiao(**parametros_necessarios)
+    musicas = playlists.obter_musicas_por_regiao(localizacao)
+    return jsonify(musicas), 200
 
 @app.route('/trends', methods=['GET'])
 def musicas_trends():
