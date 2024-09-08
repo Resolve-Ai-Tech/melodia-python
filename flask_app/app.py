@@ -1,6 +1,6 @@
 from flask import Flask, jsonify
 from src.utils import validacao_de_parametros
-from src import playlists, user
+from src import playlists
 
 # App #
 app = Flask(__name__)
