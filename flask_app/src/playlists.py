@@ -12,7 +12,7 @@ def obter_musicas(generos: List[str]) -> List[int]:
         response = get_api(url=API_URL + "musicas/pesquisar", params=params)
         if response.status_code == 200:
             dados = response.json()
-            ids_musicas.extend(musica['id'] for musica in dados)
+            ids_musicas.extend(musica for musica in dados)
             shuffle(ids_musicas)
         else:
             return f"Erro ao buscar músicas para o gênero {genero}: {response.status_code}"
@@ -25,8 +25,9 @@ def obter_musicas_por_atividade(atividade: str) -> List[int]:
         return f"Emoção {atividade} não tem gêneros recomendados"
     return obter_musicas(generos)[:50]
 
-def obter_musicas_por_preferencia(preferencias: List[str]) -> List[int]:
+def obter_musicas_por_preferencia(preferencias: str) -> List[int]:
     """Obter músicas com base em todas as preferências musicais do usuário"""
+    preferencias = preferencias.split(',')
     if not preferencias:
         return "Nenhuma preferência musical encontrada."
     return obter_musicas(preferencias)[:50]

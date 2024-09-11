@@ -9,9 +9,9 @@ app = Flask(__name__)
 def inicio():
     return jsonify({'status': 'API Funcionando!'}), 200
 
-@app.route('/playlists/preferencia', methods=['GET'])
+@app.route('/playlists/preferencias', methods=['GET'])
 def playlists_preferencia():
-    parametros_necessarios = {'dados': None}
+    parametros_necessarios = {'generos': None}
     validacao = validacao_de_parametros(parametros_necessarios)
     if validacao:
         return validacao
@@ -20,9 +20,9 @@ def playlists_preferencia():
     musicas = playlists.obter_musicas_por_preferencia(preferencias_musicais)
     return jsonify(musicas), 200
 
-@app.route('/playlists/atividade', methods=['GET'])
+@app.route('/playlists/emocional', methods=['GET'])
 def playlists_atividade():
-    parametros_necessarios = {'dados': None}
+    parametros_necessarios = {'emocionalAtual': None}
     validacao = validacao_de_parametros(parametros_necessarios)
     if validacao:
         return validacao
