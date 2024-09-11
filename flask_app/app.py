@@ -18,7 +18,7 @@ def playlists_preferencia():
 
     preferencias_musicais = parametros_necessarios['generos']
     musicas = playlists.obter_musicas_por_preferencia(preferencias_musicais)
-    return jsonify(musicas), 200
+    return jsonify({musicas}), 200
 
 @app.route('/playlists/emocional', methods=['GET'])
 def playlists_atividade():
@@ -29,7 +29,7 @@ def playlists_atividade():
 
     estado_emocional = parametros_necessarios['emocionalatual']
     musicas = playlists.obter_musicas_por_atividade(estado_emocional)
-    return jsonify(musicas), 200
+    return jsonify({musicas}), 200
 
 @app.route('/playlists/regiao', methods=['GET'])
 def playlists_regiao():
@@ -40,7 +40,7 @@ def playlists_regiao():
 
     localizacao = playlists.determinar_regiao(**parametros_necessarios)
     musicas = playlists.obter_musicas_por_regiao(localizacao)
-    return jsonify(musicas), 200
+    return jsonify({musicas}), 200
 
 @app.route('/trends', methods=['GET'])
 def musicas_trends():
