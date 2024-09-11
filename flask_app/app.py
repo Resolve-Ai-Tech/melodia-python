@@ -16,18 +16,18 @@ def playlists_preferencia():
     if validacao:
         return validacao
 
-    preferencias_musicais = parametros_necessarios['dados']
+    preferencias_musicais = parametros_necessarios['generos']
     musicas = playlists.obter_musicas_por_preferencia(preferencias_musicais)
     return jsonify(musicas), 200
 
 @app.route('/playlists/emocional', methods=['GET'])
 def playlists_atividade():
-    parametros_necessarios = {'emocionalAtual': None}
+    parametros_necessarios = {'emocionalatual': None}
     validacao = validacao_de_parametros(parametros_necessarios)
     if validacao:
         return validacao
 
-    estado_emocional = parametros_necessarios['dados']  # Ajuste conforme a estrutura de dados
+    estado_emocional = parametros_necessarios['emocionalatual']
     musicas = playlists.obter_musicas_por_atividade(estado_emocional)
     return jsonify(musicas), 200
 
